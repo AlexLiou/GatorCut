@@ -1,16 +1,21 @@
+#include <string>
+using namespace std;
 class Node{
 
 private:
-	int x;
-	int y;
+	double x;
+	double y;
 	string name;
 
 public:
 	string getName();
-	int getX();
-	int getY();
-}
+	double getX();
+	double getY();
+	Node(int x, int y, string name);
+};
 
-void PrintMenu(*Node [] locations);
+
+/*void PrintMenu(*Node [] locations);
 void addNodeLocation(string name, int x, int y);
 string [] Dijkstra(*Node [] locations);
+*/
