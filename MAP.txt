@@ -1,0 +1,15 @@
+Stadium,29.423,-83.33,
+Reitz-Union
+The HUB
+Library-West
+Turlington
+Little Hall
+Heavener Hall
+Carleton Auditorium
+Chemistry Lab
+Weimer Hall
+Weil Hall
+Marston
+University Auditorium
+Matherly Hall
+New Physics Building
