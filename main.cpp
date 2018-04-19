@@ -371,6 +371,29 @@ for(int i = 0; i < adjList.size(); i++){
             
         }
     }
+LinkedNode *lol;
+   string cur;
+   string destination;
+    double L1,Lon1,L2,Lon2,L3,Lon3,L4,Lon4;//L3is for latitude of food place and lon3 is for longtitude of food place
+    double dist1,dist2;
+    double tempp=10000000000.0;
+    cout<<"1.Marston\n2.Turlington\n3.Library West\n4.Reitz Union\n5.Century Tower\n6.Little Hall\n7.Heavener Hall\n"<<endl;
+    cout<<"Please type out your current location"<<endl;
+    cin>>cur;
+    for(int i= 0; i< locations.size(); i++) {
+        if (cur.compare(locations[i]->getName())==0) {
+            L1=locations[i]->getLat();
+            Lon1=locations[i]->getLon();
+        }
+    }
+     cout<<"Please type out your destination"<<endl;
+    cin>> destination;
+    for(int i= 0; i< locations.size(); i++) {
+        if (destination.compare(locations[i]->getName())==0) {
+           L2= locations[i]->getLat();
+            Lon2=locations[i]->getLon();
+        }
+    }
 string ans;
     string anss;
     int mark;
