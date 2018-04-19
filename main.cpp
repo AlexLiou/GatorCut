@@ -371,6 +371,7 @@ for(int i = 0; i < adjList.size(); i++){
             
         }
     }
+
 LinkedNode *lol;
    string cur;
    string destination;
@@ -394,74 +395,90 @@ LinkedNode *lol;
             Lon2=locations[i]->getLon();
         }
     }
-string ans;
+    string ans;
     string anss;
+    string place="";
+    string food="";
     int mark;
     cout<<"Would you like to stop for food ? Yes/No"<<endl;
     cin>> ans;
     if (ans.compare("Yes")==0) {
         for (int i = 0; i < locations.size(); i++) {
             if (locations[i]->getName().compare("Reitz-Union") == 0 ||
-                locations[i]->getName().compare("Little Hall") == 0 ||
-                locations[i]->getName().compare("The HUB") == 0) {
+                locations[i]->getName().compare("Little-Hall") == 0 ||
+                locations[i]->getName().compare("The-HUB") == 0) {
                 string wow = locations[i]->getName();
                 mark = i;
                 if (cur.compare(wow) == 0) {
                     cout << "there are some food places around your current location." << endl;
                     dist2 = lol->getDist(L1, Lon1, L2, Lon2);//calculation of distance code..here use 1st getDist()
-                    cout<<"The distance is "<<dist2<<endl;
+                    cout << "The distance is " << dist2 << endl;
                     break;
-                }
-                else if (destination.compare(wow) == 0) {
+                } else if (destination.compare(wow) == 0) {
                     cout
                             << "there are some food places around your destination. Do you still want us to search other food places ? Yes/No"
                             << endl;
                     cin >> anss;
-                    if (anss.compare("Yes")==0) {
+                    if (anss.compare("Yes") == 0) {
                         while (mark < locations.size()) {
                             if ((locations[mark]->getName().compare("Reitz-Union") == 0 ||
-                                 locations[mark]->getName().compare("Little Hall") == 0 ||
-                                 locations[mark]->getName().compare("The HUB") == 0) &&
+                                 locations[mark]->getName().compare("Little-Hall") == 0 ||
+                                 locations[mark]->getName().compare("The-HUB") == 0) &&
                                 (wow.compare(locations[mark]->getName()) != 0)) {
 
                                 Lon3 = locations[mark]->getLon();
                                 L3 = locations[mark]->getLat();
                                 dist1 = lol->getDist(L1, Lon1, L3, Lon3);
+                                place = "";
+                                place = locations[mark]->getName();
                             }
-                            if (dist1 < tempp) {  //compare and get the shortest path
+
+                            if (dist1 < tempp) {
+                                food = "";                   //compare and get the shortest path
+                                food = place;
                                 tempp = dist1;
                                 L4 = L3;
                                 Lon4 = Lon3;
                             }
                             mark++;
                         }
-                        dist2 = tempp + getDist(L4, Lon4, L2, Lon4);
-                        cout<<"The distance is "<<dist2<<endl;
+                        dist2 = tempp + getDist(L4, Lon4, L2, Lon2);
+                        cout << "The food place is " << food << endl;
+                        cout << "The distance is " << dist2 << endl;
+                        break;
+                    } else {
+
+                        dist2 = lol->getDist(L1, Lon1, L2, Lon2);//calculation of distance code..here use 1st getDist()
+                        cout << "The distance is " << dist2 << endl;
                         break;
                     }
-                }
-                    else {
-                    Lon3 = locations[i]->getLon();
-                    L3 = locations[i]->getLat();
+                } else {
+
+
+                    Lon3 = locations[i]->getLon();// to get the longitude
+                    L3 = locations[i]->getLat(); // to get the latitude
                     dist1 = lol->getDist(L1, Lon1, L3, Lon3);
+                    place = "";
+                    place = locations[i]->getName();
+                    if (dist1 < tempp) {
+                        food = "";                   //compare and get the shortest path
+                        food = place;
+                        tempp = dist1;
+                        L4 = L3;
+                        Lon4 = Lon3;
                     }
-                if(dist1<tempp) {  //compare and get the shortest path
-                    tempp=dist1;
-                    L4=L3;
-                    Lon4=Lon3;
-                }
                 }
 
-                else {
 
-                    dist2 = lol->getDist(L1, Lon1, L2, Lon2);
-                cout<<"The distance is "<<dist2<<endl;
-                     break;
-                }
-            dist2 = tempp + getDist(L4, Lon4, L2, Lon2);
-            cout<<"The distance is "<<dist2<<endl;
             }
+
         }
+        dist2 = tempp + lol->getDist(L4, Lon4, L2, Lon2);
+        cout << "The food place is " << food << endl;
+        cout << "The distance is " << dist2 << endl;
+    }
+
+       
 
 
     else{
