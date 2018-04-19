@@ -38,6 +38,7 @@ class LinkedNode{
 	LinkedNode* next;
 		public:
 	double getDistance();
+	double getDist(double lat1d, double lon1d, double lat2d, double lon2d);
 	Node* getNeighbor();
 	LinkedNode* getNext();
 	void setNext(LinkedNode* next);
