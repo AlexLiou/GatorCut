@@ -371,6 +371,81 @@ for(int i = 0; i < adjList.size(); i++){
             
         }
     }
+string ans;
+    string anss;
+    int mark;
+    cout<<"Would you like to stop for food ? Yes/No"<<endl;
+    cin>> ans;
+    if (ans.compare("Yes")==0) {
+        for (int i = 0; i < locations.size(); i++) {
+            if (locations[i]->getName().compare("Reitz-Union") == 0 ||
+                locations[i]->getName().compare("Little Hall") == 0 ||
+                locations[i]->getName().compare("The HUB") == 0) {
+                string wow = locations[i]->getName();
+                mark = i;
+                if (cur.compare(wow) == 0) {
+                    cout << "there are some food places around your current location." << endl;
+                    dist2 = lol->getDist(L1, Lon1, L2, Lon2);//calculation of distance code..here use 1st getDist()
+                    cout<<"The distance is "<<dist2<<endl;
+                    break;
+                }
+                else if (destination.compare(wow) == 0) {
+                    cout
+                            << "there are some food places around your destination. Do you still want us to search other food places ? Yes/No"
+                            << endl;
+                    cin >> anss;
+                    if (anss.compare("Yes")==0) {
+                        while (mark < locations.size()) {
+                            if ((locations[mark]->getName().compare("Reitz-Union") == 0 ||
+                                 locations[mark]->getName().compare("Little Hall") == 0 ||
+                                 locations[mark]->getName().compare("The HUB") == 0) &&
+                                (wow.compare(locations[mark]->getName()) != 0)) {
+
+                                Lon3 = locations[mark]->getLon();
+                                L3 = locations[mark]->getLat();
+                                dist1 = lol->getDist(L1, Lon1, L3, Lon3);
+                            }
+                            if (dist1 < tempp) {  //compare and get the shortest path
+                                tempp = dist1;
+                                L4 = L3;
+                                Lon4 = Lon3;
+                            }
+                            mark++;
+                        }
+                        dist2 = tempp + getDist(L4, Lon4, L2, Lon4);
+                        cout<<"The distance is "<<dist2<<endl;
+                        break;
+                    }
+                }
+                    else {
+                    Lon3 = locations[i]->getLon();
+                    L3 = locations[i]->getLat();
+                    dist1 = lol->getDist(L1, Lon1, L3, Lon3);
+                    }
+                if(dist1<tempp) {  //compare and get the shortest path
+                    tempp=dist1;
+                    L4=L3;
+                    Lon4=Lon3;
+                }
+                }
+
+                else {
+
+                    dist2 = lol->getDist(L1, Lon1, L2, Lon2);
+                cout<<"The distance is "<<dist2<<endl;
+                     break;
+                }
+            dist2 = tempp + getDist(L4, Lon4, L2, Lon2);
+            cout<<"The distance is "<<dist2<<endl;
+            }
+        }
+
+
+    else{
+        dist2 = lol->getDist(L1, Lon1, L2, Lon2);
+        cout<<"The distance is "<<dist2<<endl;
+    }
+
 
 //prints neighbors
 /*for(int i=0;i<lines;i++)  
