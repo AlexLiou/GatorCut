@@ -621,7 +621,20 @@ if(choice > 6 || choice < 1)
             }
 
 if(choice==1){
-    cout<<"Not yet implemented.\n";
+     cout << "\nEnter starting location: ";
+            string src;
+            cin >> src;
+            cout << "\nEnter end location: ";
+            string destination;
+            cin >> destination;
+            
+
+            dijkstra(graph, maphash.at(src), maphash.at(destination), hashmap);
+
+            /*cout<<"Enter source name";
+            cin>>src;
+            cout<<"Enter destination";
+            cin>>destination;*/
 }
 
 else if(choice==2){
@@ -710,7 +723,27 @@ else if(choice==2){
          }
             neighborChoice--;
         }
-        
+         //pushes 0 for self to the vector for the new node
+            newLocationAdjacency.push_back(0);
+          //pushes the int vector for the new node onto adjMatrix
+            adjMatrix.push_back(newLocationAdjacency);
+    
+    
+        int num = locations.size()-1;
+            hashmap[num] = locations[num]->getName();
+            maphash[locations[num]->getName()] = num;
+            graph = createGraph(V);
+            for (int i=0; i < V; i++)
+            {
+                for(int j = 0; j< locations[i]->getNeighbors().size(); j++)
+                {
+                    int num = maphash.at(locations[i]->getNeighbors()[j]->getName());
+                    addEdge(graph, i, num, locations[i]->getDistances()[j]);
+                }
+            }
+    
+    
+    
         //tests adjList
         /*cout << "\n\n";
         for(int i = 0; i < adjList.size(); i++){
