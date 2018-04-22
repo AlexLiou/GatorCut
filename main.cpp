@@ -197,7 +197,7 @@ void addEdge(struct Graph* graph, int src, int dest, double weight)
 struct MinHeapNode
 {
     int  v;
-    int dist;
+    double dist;
 };
 
 // Structure to represent a min heap
@@ -210,7 +210,7 @@ struct MinHeap
 };
 
 // A utility function to create a new Min Heap Node
-struct MinHeapNode* newMinHeapNode(int v, int dist)
+struct MinHeapNode* newMinHeapNode(int v, double dist)
 {
     struct MinHeapNode* minHeapNode =
             (struct MinHeapNode*) malloc(sizeof(struct MinHeapNode));
@@ -307,7 +307,7 @@ struct MinHeapNode* extractMin(struct MinHeap* minHeap)
 
 // Function to decreasy dist value of a given vertex v. This function
 // uses pos[] of min heap to get the current index of node in min heap
-void decreaseKey(struct MinHeap* minHeap, int v, int dist)
+void decreaseKey(struct MinHeap* minHeap, int v, double dist)
 {
     // Get the index of v in  heap array
     int i = minHeap->pos[v];
@@ -348,8 +348,9 @@ void printPath(int parent[], int src, int destination, map<int, string> hashmap)
 // A utility function used to print the solution
 void printArr(double dist[], int src, int parent[], int destination, map<int, string> hashmap)
 {
+    double steps = dist[destination]*1320;
     printf("Source:\t\tDestination:\t\tDistance from Source:\n");
-    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<<"\t\t";
+    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<< " km" <<"\t=\t" <<steps<<" steps";
     cout << endl;
     cout << "\nPath from " << hashmap.at(src) << endl;
     printPath(parent, src, destination, hashmap);
@@ -425,7 +426,7 @@ int main(){
     vector <Node*> locations;//vector of node locations
     vector <string> temp;
     vector <string> token;
-    vector <vector <int> > adjMatrix; //used to figure out which nodes are neighbors 
+    vector <vector <int> > adjMatrix; //used to figure out which nodes are neighbors
     vector <LinkedNode*> adjList;
     vector <Node*> neighborsPassToNode;
     vector <double> distancesPassToNode;
@@ -452,7 +453,7 @@ int main(){
     string name;
     double lon;
     double lat;
-    int iter = 0;   
+    int iter = 0;
     //each line correlates to a new node so each loop creates a node
     for(int i = 1; i <= lines; i++){
         name = token[iter];
@@ -497,235 +498,280 @@ int main(){
         nodeAdj.clear();
     }
     //tests adjMatrix
-    /*for(int x=0;x<adjMatrix.size();x++)  
+    /*for(int x=0;x<adjMatrix.size();x++)
     {
-        for(int y=0;y<adjMatrix[x].size();y++)  
+        for(int y=0;y<adjMatrix[x].size();y++)
         {
-            cout<<adjMatrix[x][y]; 
+            cout<<adjMatrix[x][y];
         }
-    cout<<endl;  
+    cout<<endl;
     }*/
 
-for(int i = 0; i < lines; i++){
-    
-    for(int j = 0; j<lines; j++){
-        if(adjMatrix[i][j]==1){
-            locations[i]->pushNeighbors(locations[j]);
-            locations[i]->pushDistances(getDist(locations[i]->getLat(), locations[i]->getLon(), locations[j]->getLat(), locations[j]->getLon()));
-        }
+    for(int i = 0; i < lines; i++){
 
-    }
-}
-
-//creates the adjacency list by making a node for each neighbor at a locations index
-LinkedNode* emptyLink;
-LinkedNode* tempLink;
-for(int i = 0; i < locations.size(); i++){
-        for (int j = 0; j < locations[i]->getNeighbors().size(); j++)
-        {
-            //if it is the first neighbor, create the head of the linked list in the adjList
-           if(j==0){
-                adjList.push_back(new LinkedNode(locations[i]->getDistances()[j], locations[i]->getNeighbors()[j]));
-                tempLink = adjList[i];
-                //cout << "\n Pushed " << locations[i]->getNeighbors()[j]->getName() << " to adjList at the index for " << locations[i]->getName();
+        for(int j = 0; j<lines; j++){
+            if(adjMatrix[i][j]==1){
+                locations[i]->pushNeighbors(locations[j]);
+                locations[i]->pushDistances(getDist(locations[i]->getLat(), locations[i]->getLon(), locations[j]->getLat(), locations[j]->getLon()));
             }
-            //if adjList has already been pushed the head at this index, set the next node to as the j neighbor
-            else{
-                tempLink->setNext(new LinkedNode(locations[i]->getDistances()[j], locations[i]->getNeighbors()[j]));
-                tempLink=tempLink->getNext();
-                //cout << "\n Added " << locations[i]->getNeighbors()[j]->getName() << " to adjList at the index for " << locations[i]->getName();
+
+        }
+    }
+
+    //creates the adjacency list by making a node for each neighbor at a locations index
+    LinkedNode* emptyLink;
+    LinkedNode* tempLink;
+    for(int i = 0; i < locations.size(); i++){
+            for (int j = 0; j < locations[i]->getNeighbors().size(); j++)
+            {
+                //if it is the first neighbor, create the head of the linked list in the adjList
+            if(j==0){
+                    adjList.push_back(new LinkedNode(locations[i]->getDistances()[j], locations[i]->getNeighbors()[j]));
+                    tempLink = adjList[i];
+                    //cout << "\n Pushed " << locations[i]->getNeighbors()[j]->getName() << " to adjList at the index for " << locations[i]->getName();
+                }
+                //if adjList has already been pushed the head at this index, set the next node to as the j neighbor
+                else{
+                    tempLink->setNext(new LinkedNode(locations[i]->getDistances()[j], locations[i]->getNeighbors()[j]));
+                    tempLink=tempLink->getNext();
+                    //cout << "\n Added " << locations[i]->getNeighbors()[j]->getName() << " to adjList at the index for " << locations[i]->getName();
+                }
+            }
+    }
+
+    //tests adjList
+    /*for(int i = 0; i < adjList.size(); i++){
+        tempLink = adjList[i];
+        cout << locations[i]->getName() << endl;
+        cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl;
+        cout << "       Distance: " << tempLink->getDistance() << endl;
+            while(tempLink->getNext()!=NULL)
+            {
+                tempLink = tempLink->getNext();
+                cout << locations[i]->getName() << endl;
+                cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl;
+                cout << "       Distance: " << tempLink->getDistance() << endl;
+
+
+            }
+    }*/
+
+    //prints neighbors
+    /*for(int i=0;i<lines;i++)
+        {
+            for(int j=0;j<locations[i]->getNeighbors().size();j++)
+            {
+                cout<<locations[i]->getNeighbors()[j]->getName();
             }
         }
-}
-
-//tests adjList
-/*for(int i = 0; i < adjList.size(); i++){
-    tempLink = adjList[i];
-    cout << locations[i]->getName() << endl;
-    cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl; 
-    cout << "       Distance: " << tempLink->getDistance() << endl;
-        while(tempLink->getNext()!=NULL)
-        {
-            tempLink = tempLink->getNext();
-            cout << locations[i]->getName() << endl;
-            cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl; 
-            cout << "       Distance: " << tempLink->getDistance() << endl;
-            
-            
-        }
-}*/
-
-//prints neighbors
-/*for(int i=0;i<lines;i++)  
-    {
-        for(int j=0;j<locations[i]->getNeighbors().size();j++)  
-        {
-            cout<<locations[i]->getNeighbors()[j]->getName(); 
-        } 
-    }
-*/
-int V = locations.size();
+    */
+    int V = locations.size();
     map<int,string> hashmap;
     for (int i=0; i < V; i++)
     {
         hashmap[i] = locations[i]->getName();
-        cout << "\n" << hashmap.at(i) << endl;
     }
 
     map<string, int> maphash;
     for (int i=0; i < V; i++)
     {
         maphash[locations[i]->getName()] = i;
-        cout << "\n" << maphash.at(locations[i]->getName()) << endl;
     }
     struct Graph* graph = createGraph(V);
     for (int i=0; i < V; i++)
     {
-        
+
         for(int j = 0; j< locations[i]->getNeighbors().size(); j++)
         {
 
             int num = maphash.at(locations[i]->getNeighbors()[j]->getName());
             addEdge(graph, i, num, locations[i]->getDistances()[j]);
+            addEdge(graph, num, i, locations[i]->getDistances()[j]);
         }
     }
-    dijkstra(graph, 0, 3, hashmap);
 
 
-int choice;
-while(choice!=6){
-cout<<"\n--------------------Choices--------------------\n";
-cout<<"                 1. Directions\n";
-cout<<"                2. Add Location\n";
-cout<<"               3. Print Locations\n";
-cout<<"                5. Database test\n";
-cout<<"                    6. Exit\n\n";
-cin >> choice;
-bool fail = cin.fail();
-if(choice > 6 || choice < 1)
-                fail = true;
-            //validates the user input for being both an integer and in the range of valid input
-    while(fail){
-        cout<<"Invalid input, please input a whole number between 1 and 6.\n";
-         cin.clear();
-         cin.ignore(10000, '\n');
-         cin>>choice;
-         fail = cin.fail();
-            if (!fail)
-            {
-                if (choice >6 || choice <1)
-                    {
-                        fail = true;
+    int choice;
+    while(choice!=6){
+    cout<<"\n--------------------Choices--------------------\n";
+    cout<<"                 1. Directions\n";
+    cout<<"                2. Add Location\n";
+    cout<<"               3. Print Locations\n";
+    cout<<"                5. Database test\n";
+    cout<<"                    6. Exit\n\n";
+    cin >> choice;
+    bool fail = cin.fail();
+    if(choice > 6 || choice < 1)
+                    fail = true;
+                //validates the user input for being both an integer and in the range of valid input
+        while(fail){
+            cout<<"Invalid input, please input a whole number between 1 and 6.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cin>>choice;
+            fail = cin.fail();
+                if (!fail)
+                {
+                    if (choice >6 || choice <1)
+                        {
+                            fail = true;
+                        }
                     }
                 }
-            }
 
-if(choice==1){
-     cout << "\nEnter starting location: ";
+    if(choice==1){
+
+            cout << "\nEnter starting location: ";
             string src;
             cin >> src;
+
             cout << "\nEnter end location: ";
             string destination;
             cin >> destination;
-            
+
+            if (maphash.find(src) == maphash.end())
+            {
+                cout << "\nLocation(s) not in database.";
+                continue;
+            } else if (maphash.find(destination) == maphash.end())
+            {
+                cout << "\nLocation(s) not in database.";
+                continue;
+            }
+
+
 
             dijkstra(graph, maphash.at(src), maphash.at(destination), hashmap);
 
-            /*cout<<"Enter source name";
-            cin>>src;
-            cout<<"Enter destination";
-            cin>>destination;*/
-}
+    }
 
-else if(choice==2){
-        cout << fixed << showpoint;
-        cout << setprecision(5);
-        double lon;
-        double lat;
-        string newName;
-        int neighborChoice;
-        string neighName;
-        int neighIndex;
-        cout << "\nEnter Longtitude.\n";
-        cin >> lon;
-        while(cin.fail()){
-            cout << "Enter a longtitude number.\n";
-            cin >>lon;
-        }
-        cout << "Enter Latitude.\n";
-        cin >> lat;
-        while(cin.fail()){
-            cout << "Enter a latitude number.\n";
-            cin >>lat;
-        }
-        cout << "Enter location name.\n";
-        cin >> newName;
-        while(locationNameExists(newName, locations)){
-            cout << "Location name already exists. Please enter a different name.\n";
+    else if(choice==2){
+            cout << fixed << showpoint;
+            cout << setprecision(5);
+            double lon;
+            double lat;
+            string newName;
+            int neighborChoice;
+            string neighName;
+            int neighIndex;
+            cout << "\nEnter Longtitude.\n";
+            cin >> lon;
+            while(cin.fail()){
+                cout << "Enter a longtitude number.\n";
+                cin >> lon;
+                cin.clear();
+                cin.ignore(1000);
+            }
+            cout << "Enter Latitude.\n";
+            cin >> lat;
+            while(cin.fail()){
+                cout << "Enter a latitude number.\n";
+                cin >>lat;
+                cin.clear();
+                cin.ignore(1000);
+            }
+            cout << "Enter location name.\n";
             cin >> newName;
-        }
-        locations.push_back(new Node(lon, lat, newName, neighborsPassToNode, distancesPassToNode));
-        cout << "Enter the number of neighbors.\n";
-        cin >> neighborChoice;
-        bool fail = cin.fail();
-        if(neighborChoice > locations.size())
-            fail = true;
-        while(fail){
-            cout << "Enter a whole number that is less than half the number of locations.\n";
-            cin >>neighborChoice;
-            if(!cin.fail() && neighborChoice < locations.size()/2)
-                fail = false;
-        }
-        //takes in a neighbor name and adds it to adjList and locations
-        while(neighborChoice>0){
-            cout << "Enter neighbor name.\n";
-            cin >> neighName;
-            while(!locationNameExists(neighName, locations, neighIndex)){
-                cout << "Neighbor name does not exist, please check spelling and list of neighbors and try again or enter Quit.\n";
-                cin >> neighName;    
-                if(neighName=="Quit")
-                    break;
+            while(locationNameExists(newName, locations)){
+                cout << "Location name already exists. Please enter a different name.\n";
+                cin >> newName;
+                cin.clear();
+                cin.ignore(1000);
+            }
+            locations.push_back(new Node(lon, lat, newName, neighborsPassToNode, distancesPassToNode));
+            cout << "Enter the number of neighbors.\n";
+            cin >> neighborChoice;
+            bool fail = cin.fail();
+            if(neighborChoice > locations.size())
+                fail = true;
+            while(fail){
+                cout << "Enter a whole number that is less than half the number of locations.\n";
+                cin >> neighborChoice;
+                if(!cin.fail() && neighborChoice < locations.size()/2)
+                    fail = false;
+                cin.clear();
+                cin.ignore(1000);
+            }
+            //takes in a neighbor name and adds it to adjList and locations
+            while(neighborChoice>0){
+                cout << "Enter neighbor name.\n";
+                cin >> neighName;
+                while(!locationNameExists(neighName, locations, neighIndex)){
+                    cout << "Neighbor name does not exist, please check spelling and list of neighbors and try again or enter Quit.\n";
+                    cin >> neighName;
+                    if(neighName=="Quit")
+                        break;
+                    cin.clear();
+                    cin.ignore(1000);
+                }
+            double dist;
+            for(int i=0; i<locations.size()-1; i++){
+
+                if(neighName == locations[i]->getName()){
+                    //locations update
+                    dist = getDist(locations[i]->getLat(), locations[i]->getLon(), locations[locations.size()-1]->getLat(), locations[locations.size()-1]->getLon());
+                    locations[i]->pushNeighbors(locations[locations.size()-1]);
+                    locations[i]->pushDistances(dist);
+                    locations[locations.size()-1]->pushNeighbors(locations[i]);
+                    locations[locations.size()-1]->pushDistances(dist);
+
+                    //adjList update
+
+                    //updates the neighbor -> iterates through the list and links the end to the new neighbor
+                    tempLink = adjList[i];
+                    for(int j = 0; j < locations[i]->getNeighbors().size()-2; j++){
+                        tempLink=tempLink->getNext();
+                    }
+                    tempLink->setNext(new LinkedNode(dist, locations[locations.size()-1]));
+
+                    //updates the new Node -> pushes to adjList if an element of a adjList hasnt been made for this index
+                    if(adjList.size()<locations.size()){
+                        adjList.push_back(new LinkedNode(dist, locations[i]));
+                    }
+                    //otherwise iterates through and adds a linked node for the new neighbor
+                    else{
+                        tempLink=adjList[adjList.size()-1];
+                        while(tempLink->getNext()!=NULL){
+                            tempLink=tempLink->getNext();
+                        }
+                        tempLink->setNext(new LinkedNode(dist, locations[i]));
+                    }
+                }
+            }
+                neighborChoice--;
+            }
+
+
+            int num = locations.size()-1;
+                hashmap[num] = locations[num]->getName();
+                maphash[locations[num]->getName()] = num;
+                graph = createGraph(V);
+                for (int i=0; i < V; i++)
+                {
+                    for(int j = 0; j< locations[i]->getNeighbors().size(); j++)
+                    {
+                        int num = maphash.at(locations[i]->getNeighbors()[j]->getName());
+                        addEdge(graph, i, num, locations[i]->getDistances()[j]);
+                    }
+                }
+
+
+
+            //tests adjList
+            /*cout << "\n\n";
+            for(int i = 0; i < adjList.size(); i++){
+                tempLink = adjList[i];
+            for (int j = 0; j < locations[i]->getNeighbors().size(); ++j)
+            {
+                cout << locations[i]->getName() << endl;
+                cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl;
+                cout << "       Distance: " << tempLink->getDistance() << endl;
+                tempLink = tempLink->getNext();
 
             }
-           double dist;
-        for(int i=0; i<locations.size()-1; i++){
-     
-            if(neighName == locations[i]->getName()){
-                //locations update
-                dist = getDist(locations[i]->getLat(), locations[i]->getLon(), locations[locations.size()-1]->getLat(), locations[locations.size()-1]->getLon());
-                locations[i]->pushNeighbors(locations[locations.size()-1]);
-                locations[i]->pushDistances(dist);
-                locations[locations.size()-1]->pushNeighbors(locations[i]);
-                locations[locations.size()-1]->pushDistances(dist);
-                
-                //adjList update
-                
-                //updates the neighbor -> iterates through the list and links the end to the new neighbor
-                tempLink = adjList[i];
-                for(int j = 0; j < locations[i]->getNeighbors().size()-2; j++){
-                    tempLink=tempLink->getNext();
-                }
-                tempLink->setNext(new LinkedNode(dist, locations[locations.size()-1]));
-                
-                //updates the new Node -> pushes to adjList if an element of a adjList hasnt been made for this index
-                if(adjList.size()<locations.size()){
-                    adjList.push_back(new LinkedNode(dist, locations[i]));
-                }
-                //otherwise iterates through and adds a linked node for the new neighbor
-                else{
-                    tempLink=adjList[adjList.size()-1];
-                    while(tempLink->getNext()!=NULL){
-                        tempLink=tempLink->getNext();
-                    }  
-                    tempLink->setNext(new LinkedNode(dist, locations[i]));
-                }
-            }
-         }
-            neighborChoice--;
-        }
-    
-    
-        int num = locations.size()-1;
+    }*/
+            V++;
+            num = locations.size()-1;
             hashmap[num] = locations[num]->getName();
             maphash[locations[num]->getName()] = num;
             graph = createGraph(V);
@@ -737,61 +783,44 @@ else if(choice==2){
                     addEdge(graph, i, num, locations[i]->getDistances()[j]);
                 }
             }
-    
-    
-    
-        //tests adjList
-        /*cout << "\n\n";
-        for(int i = 0; i < adjList.size(); i++){
-            tempLink = adjList[i];
-        for (int j = 0; j < locations[i]->getNeighbors().size(); ++j)
-        {
-            cout << locations[i]->getName() << endl;
-            cout << "   Neighbor: " << tempLink->getNeighbor()->getName() << endl; 
-            cout << "       Distance: " << tempLink->getDistance() << endl;
-            tempLink = tempLink->getNext();
-            
+
+
+            cout<<"\nLocation Added\n\n";
+
+
+
         }
-}*/
-        
-        
-        cout<<"\nLocation Added\n\n";
-
-
-
-    }
-else if(choice==3){
-for (int i = 0; i < locations.size(); ++i)
-{
-    cout<< "\nName: "<< locations[i]->getName() << " Longtitude: " <<locations[i]->getLon() << " Latitude: "<< locations[i]->getLat();
-}
-}
-else if(choice == 5){
-    cout << "\nLocations:\n";
+    else if(choice==3){
     for (int i = 0; i < locations.size(); ++i)
     {
-        cout << " -> " << locations[i]->getName();
-            for(int j = 0; j< locations[i]->getNeighbors().size(); j++){
-                cout << "\n    ->  Neighbor: " << locations[i]->getNeighbors()[j]->getName();
-                 cout << fixed << showpoint;
-                cout << setprecision(5);
-                cout << "\n    ->  Distance: " << locations[i]->getDistances()[j];
-            }
-            cout << "\n\n";
+        cout<< "\nName: "<< locations[i]->getName() << " Longtitude: " <<locations[i]->getLon() << " Latitude: "<< locations[i]->getLat();
     }
+    }
+    else if(choice == 5){
+        cout << "\nLocations:\n";
+        for (int i = 0; i < locations.size(); ++i)
+        {
+            cout << " -> " << locations[i]->getName();
+                for(int j = 0; j< locations[i]->getNeighbors().size(); j++){
+                    cout << "\n    ->  Neighbor: " << locations[i]->getNeighbors()[j]->getName();
+                    cout << fixed << showpoint;
+                    cout << setprecision(5);
+                    cout << "\n    ->  Distance: " << locations[i]->getDistances()[j] << " km";
+                }
+                cout << "\n\n";
+        }
+    }
+    else if(choice == 6){
+        return 0;
+    }
+    }
+
+
+
+
+
+
+
+
+        return 0;
 }
-else if(choice == 6){
-    return 0;
-}
-}
-
-
-
-
-
-
-
-
-    return 0;
-}
-
