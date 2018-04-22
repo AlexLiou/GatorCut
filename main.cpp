@@ -133,7 +133,7 @@ bool locationNameExists(string checkCase, vector <Node*> locations){
 struct AdjListNode
 {
     int dest;
-    double weight;
+    int weight;
     struct AdjListNode* next;
 };
 
@@ -152,7 +152,7 @@ struct Graph
 };
 
 // A utility function to create a new adjacency list node
-struct AdjListNode* newAdjListNode(int dest, double weight)
+struct AdjListNode* newAdjListNode(int dest, int weight)
 {
     struct AdjListNode* newNode =
             (struct AdjListNode*) malloc(sizeof(struct AdjListNode));
@@ -179,7 +179,7 @@ struct Graph* createGraph(int V)
 }
 
 // Adds an edge to an undirected graph
-void addEdge(struct Graph* graph, int src, int dest, double weight)
+void addEdge(struct Graph* graph, int src, int dest, int weight)
 {
     // Add an edge from src to dest.  A new node is added to the adjacency
     // list of src.  The node is added at the begining
@@ -197,7 +197,7 @@ void addEdge(struct Graph* graph, int src, int dest, double weight)
 struct MinHeapNode
 {
     int  v;
-    double dist;
+    int dist;
 };
 
 // Structure to represent a min heap
@@ -210,7 +210,7 @@ struct MinHeap
 };
 
 // A utility function to create a new Min Heap Node
-struct MinHeapNode* newMinHeapNode(int v, double dist)
+struct MinHeapNode* newMinHeapNode(int v, int dist)
 {
     struct MinHeapNode* minHeapNode =
             (struct MinHeapNode*) malloc(sizeof(struct MinHeapNode));
@@ -307,7 +307,7 @@ struct MinHeapNode* extractMin(struct MinHeap* minHeap)
 
 // Function to decreasy dist value of a given vertex v. This function
 // uses pos[] of min heap to get the current index of node in min heap
-void decreaseKey(struct MinHeap* minHeap, int v, double dist)
+void decreaseKey(struct MinHeap* minHeap, int v, int dist)
 {
     // Get the index of v in  heap array
     int i = minHeap->pos[v];
@@ -348,8 +348,10 @@ void printPath(int parent[], int src, int destination, map<int, string> hashmap)
 // A utility function used to print the solution
 void printArr(double dist[], int src, int parent[], int destination, map<int, string> hashmap)
 {
-    printf("Source  Destination   Distance from Source   Path\n");
-    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<<"\t\t"<<hashmap.at(src)<<"\t\t";
+    printf("Source:\t\tDestination:\t\tDistance from Source:\n");
+    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<<"\t\t";
+    cout << endl;
+    cout << "\nPath from " << hashmap.at(src) << endl;
     printPath(parent, src, destination, hashmap);
 
 }
@@ -419,28 +421,8 @@ void dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap)
 
 
 
+
 int main() {
-
-    // create the graph given in above fugure
-    int V = 9;
-
-    struct Graph* graph = createGraph(V);
-    addEdge(graph, 0, 1, 4);
-    addEdge(graph, 0, 7, 8);
-    addEdge(graph, 1, 2, 8);
-    addEdge(graph, 1, 7, 11);
-    addEdge(graph, 2, 3, 7);
-    addEdge(graph, 2, 8, 2);
-    addEdge(graph, 2, 5, 4);
-    addEdge(graph, 3, 4, 9);
-    addEdge(graph, 3, 5, 14);
-    addEdge(graph, 4, 5, 10);
-    addEdge(graph, 5, 6, 2);
-    addEdge(graph, 6, 7, 1);
-    addEdge(graph, 6, 8, 6);
-    addEdge(graph, 7, 8, 7);
-
-    //dijkstra(graph, 0,2);
 
 
     vector <Node*> locations;//vector of node locations
@@ -451,36 +433,8 @@ int main() {
     vector <Node*> neighborsPassToNode;
     vector <double> distancesPassToNode;
 
-
-
-map<int,string> hashmap;
-    hashmap[0]="StudentRec";
-    hashmap[1]="Marston";
-    hashmap[2]="Turlington";
-    hashmap[3]="LibWest";
-    hashmap[4]="CenturyTower";
-    hashmap[5]="Potato";
-    hashmap[6]="SouthwestGym";
-    hashmap[7]="NEB";
-    hashmap[8]="CISE";
-    std::cout<<"\n"<<hashmap.at(3)<<endl;
-
-map<string, int> maphash;
-        maphash["StudentRec"]=0;
-        maphash["Marston"]=1;
-        maphash["Turlington"]=2;
-        maphash["LibWest"]=3;
-        maphash["CenturyTower"]=4;
-        maphash["Potato"]=5;
-        maphash["SouthwestGym"]=6;
-        maphash["NEB"]=7;
-        maphash["CISE"]=8;
-
-
-
-    /*int lines = 0;
+    int lines = 0;
     string filename = "map.txt";
-
     ifstream infile(filename);
     //    infile.open(filename);
     string str;
@@ -493,11 +447,12 @@ map<string, int> maphash;
             // }
         }
     }
-
     //tests token vector
-    /*for(auto p: token){
+    /*
+    for(auto p: token){
         std::cout<<p<<endl;
     }
+    */
     //iterates through the token list and creates a Node for each one specified
     string name;
     double lon;
@@ -514,13 +469,14 @@ map<string, int> maphash;
             iter++;
         locations.push_back(new Node(lat, lon, name, neighborsPassToNode, distancesPassToNode));
     }
+    /*
     //prints out to test the Node locations vector
-    /*for(int i= 0; i<locations.size(); i++){
+    for(int i= 0; i<locations.size(); i++){
     	cout<< locations[i]->getlon();
     	cout<< locations[i]->getY();
     	cout<< locations[i]->getName();
     }
-
+    */
     string adjacencyFileName = "adj.txt";
     //clears token vector for reuse
     token.clear();
@@ -533,8 +489,6 @@ map<string, int> maphash;
             // }
         }
     }
-
-
     vector <int> nodeAdj;
     iter = 0;
     //iterates through the token list, knowing each line should have a number of 1s/0s/-1s equal to the locations.size()
@@ -549,7 +503,8 @@ map<string, int> maphash;
         nodeAdj.clear();
     }
     //tests adjMatrix
-    /*for(int x=0;x<adjMatrix.size();x++)
+    /*
+    for(int x=0;x<adjMatrix.size();x++)
     {
         for(int y=0;y<adjMatrix[x].size();y++)
         {
@@ -557,22 +512,17 @@ map<string, int> maphash;
         }
     cout<<endl;
     }
-
+    */
     for(int i = 0; i < lines; i++){
-
         for(int j = 0; j<lines; j++){
             if(adjMatrix[i][j]==1){
                 locations[i]->pushNeighbors(locations[j]);
                 locations[i]->pushDistances(getDist(locations[i]->getLat(), locations[i]->getLon(), locations[j]->getLat(), locations[j]->getLon()));
             }
-
         }
-
     }
-
     LinkedNode* emptyLink;
     LinkedNode* tempLink;
-
     for(int i = 0; i < locations.size(); i++){
         for (int j = 0; j < locations[i]->getNeighbors().size(); ++j)
         {
@@ -584,7 +534,35 @@ map<string, int> maphash;
                 tempLink->setNext(new LinkedNode(locations[i]->getDistances()[j], locations[i]->getNeighbors()[j], emptyLink));
             }
         }
-    }*/
+    }
+
+    int V = locations.size();
+    map<int,string> hashmap;
+    for (int i=0; i < V; i++)
+    {
+        hashmap[i] = locations[i]->getName();
+        cout << "\n" << hashmap.at(i) << endl;
+    }
+
+    map<string, int> maphash;
+    for (int i=0; i < V; i++)
+    {
+        maphash[locations[i]->getName()] = i;
+        cout << "\n" << maphash.at(locations[i]->getName()) << endl;
+    }
+    struct Graph* graph = createGraph(V);
+    for (int i=0; i < V; i++)
+    {
+        
+        for(int j = 0; j< locations[i]->getNeighbors().size(); j++)
+        {
+
+            int num = maphash.at(locations[i]->getNeighbors()[j]->getName());
+            addEdge(graph, i, num, locations[i]->getDistances()[j]);
+        }
+    }
+    dijkstra(graph, 0, 3, hashmap);
+
 
 
 
@@ -618,9 +596,13 @@ map<string, int> maphash;
         }
 
         if(choice==1){
-            string src = "Marston";
-            string destination ="Potato";
-            cout<<src;
+            cout << "\nEnter starting location: ";
+            string src;
+            cin >> src;
+            cout << "\nEnter end location: ";
+            string destination;
+            cin >> destination;
+            
 
             dijkstra(graph, maphash.at(src), maphash.at(destination), hashmap);
 
@@ -720,6 +702,18 @@ map<string, int> maphash;
             distancesPassToNode.clear();
             cout<<"\nLocation Added\n\n";
 
+            int num = locations.size()-1;
+            hashmap[num] = locations[num]->getName();
+            maphash[locations[num]->getName()] = num;
+            graph = createGraph(V);
+            for (int i=0; i < V; i++)
+            {
+                for(int j = 0; j< locations[i]->getNeighbors().size(); j++)
+                {
+                    int num = maphash.at(locations[i]->getNeighbors()[j]->getName());
+                    addEdge(graph, i, num, locations[i]->getDistances()[j]);
+                }
+            }
 
 
         }
@@ -747,6 +741,7 @@ map<string, int> maphash;
             return 0;
         }
     }
+
 
     return 0;
 }
