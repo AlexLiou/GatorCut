@@ -133,7 +133,7 @@ bool locationNameExists(string checkCase, vector <Node*> locations){
 struct AdjListNode
 {
     int dest;
-    int weight;
+    double weight;
     struct AdjListNode* next;
 };
 
@@ -152,7 +152,7 @@ struct Graph
 };
 
 // A utility function to create a new adjacency list node
-struct AdjListNode* newAdjListNode(int dest, int weight)
+struct AdjListNode* newAdjListNode(int dest, double weight)
 {
     struct AdjListNode* newNode =
             (struct AdjListNode*) malloc(sizeof(struct AdjListNode));
@@ -179,7 +179,7 @@ struct Graph* createGraph(int V)
 }
 
 // Adds an edge to an undirected graph
-void addEdge(struct Graph* graph, int src, int dest, int weight)
+void addEdge(struct Graph* graph, int src, int dest, double weight)
 {
     // Add an edge from src to dest.  A new node is added to the adjacency
     // list of src.  The node is added at the begining
@@ -197,7 +197,7 @@ void addEdge(struct Graph* graph, int src, int dest, int weight)
 struct MinHeapNode
 {
     int  v;
-    int dist;
+    double dist;
 };
 
 // Structure to represent a min heap
@@ -210,7 +210,7 @@ struct MinHeap
 };
 
 // A utility function to create a new Min Heap Node
-struct MinHeapNode* newMinHeapNode(int v, int dist)
+struct MinHeapNode* newMinHeapNode(int v, double dist)
 {
     struct MinHeapNode* minHeapNode =
             (struct MinHeapNode*) malloc(sizeof(struct MinHeapNode));
@@ -307,7 +307,7 @@ struct MinHeapNode* extractMin(struct MinHeap* minHeap)
 
 // Function to decreasy dist value of a given vertex v. This function
 // uses pos[] of min heap to get the current index of node in min heap
-void decreaseKey(struct MinHeap* minHeap, int v, int dist)
+void decreaseKey(struct MinHeap* minHeap, int v, double dist)
 {
     // Get the index of v in  heap array
     int i = minHeap->pos[v];
@@ -346,7 +346,7 @@ void printPath(int parent[], int src, int destination, map<int, string> hashmap)
 }
 
 // A utility function used to print the solution
-void printArr(int dist[], int src, int parent[], int destination, map<int, string> hashmap)
+void printArr(double dist[], int src, int parent[], int destination, map<int, string> hashmap)
 {
     printf("Source  Destination   Distance from Source   Path\n");
     cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<<"\t\t"<<hashmap.at(src)<<"\t\t";
@@ -359,7 +359,7 @@ void printArr(int dist[], int src, int parent[], int destination, map<int, strin
 void dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap)
 {   //starting
     int V = graph->V;// Get the number of vertices in graph
-    int dist[V];      // dist values used to pick minimum weight edge in cut
+    double dist[V];      // dist values used to pick minimum weight edge in cut
     int destinIndex= dest;
     int parent [V];
     // minHeap represents set E
@@ -368,7 +368,7 @@ void dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap)
     // Initialize min heap with all vertices. dist value of all vertices
     for (int v = 0; v < V; ++v)
     {
-        dist[v] = INT_MAX;
+        dist[v] = std::numeric_limits<double>::max();
         minHeap->array[v] = newMinHeapNode(v, dist[v]);
         minHeap->pos[v] = v;
     }
@@ -400,7 +400,7 @@ void dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap)
 
             // If shortest distance to v is not finalized yet, and distance to v
             // through u is less than its previously calculated distance
-            if (isInMinHeap(minHeap, v) && dist[u] != INT_MAX &&
+            if (isInMinHeap(minHeap, v) && dist[u] != std::numeric_limits<double>::max() &&
                 pCrawl->weight + dist[u] < dist[v])
             {
                 parent[v]=u;
