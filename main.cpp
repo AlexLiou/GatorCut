@@ -654,29 +654,29 @@ int main(){
             int neighborChoice;
             string neighName;
             int neighIndex;
-            cout << "\nEnter Longtitude.\n";
+           cout << "\nEnter Longtitude.\n";
             cin >> lon;
             while(cin.fail()){
-                cout << "Enter a longtitude number.\n";
-                cin >> lon;
-                cin.clear();
-                cin.ignore(1000);
-            }
+            cout << "Enter a longtitude number.\n";
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cin >>lon; 
+        }
             cout << "Enter Latitude.\n";
             cin >> lat;
             while(cin.fail()){
                 cout << "Enter a latitude number.\n";
-                cin >>lat;
                 cin.clear();
-                cin.ignore(1000);
+                 cin.ignore(1000,'\n');
+                cin >>lat;
             }
             cout << "Enter location name.\n";
             cin >> newName;
             while(locationNameExists(newName, locations)){
                 cout << "Location name already exists. Please enter a different name.\n";
-                cin >> newName;
                 cin.clear();
                 cin.ignore(1000);
+                cin >> newName;
             }
             locations.push_back(new Node(lon, lat, newName, neighborsPassToNode, distancesPassToNode));
             cout << "Enter the number of neighbors.\n";
