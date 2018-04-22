@@ -338,20 +338,19 @@ bool isInMinHeap(struct MinHeap *minHeap, int v)
     return false;
 }
 
-void printPath(int parent[], int j, map<int, string> hashmap){
-    if(parent[j]==-1) return;
-
-    printPath(parent, parent[j], hashmap);
-    printf("%d", hashmap.at(j));
+void printPath(int parent[], int src, int destination, map<int, string> hashmap){
+    if(destination==src) return;
+    printPath(parent, src, parent[destination], hashmap);
+    cout<<hashmap.at(destination)<<"\t\t";
+    destination=parent[destination];
 }
 
 // A utility function used to print the solution
-void printArr(int dist[], int n, int parent[], int destination, map<int, string> hashmap)
+void printArr(int dist[], int src, int parent[], int destination, map<int, string> hashmap)
 {
-    int src=0;
-    printf("Vertex   Distance from Source   Path\n");
-        printf("\n%d \t\t %d \t\t %d" , hashmap.at(destination), dist[destination], hashmap.at(src));
-        printPath(parent, destination, hashmap);
+    printf("Source  Destination   Distance from Source   Path\n");
+    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<<"\t\t"<<hashmap.at(src)<<"\t\t";
+    printPath(parent, src, destination, hashmap);
 
 }
 
@@ -415,7 +414,7 @@ void dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap)
     }
 
     // print the calculated shortest distances
-    printArr(dist, V, parent, dest, hashmap);
+    printArr(dist, src, parent, dest, hashmap);
 }
 
 
