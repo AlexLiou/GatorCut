@@ -49,7 +49,7 @@ class LinkedNode{
 	Node* getNeighbor();
 	LinkedNode* getNext();
 	void setNext(LinkedNode* next);
-	LinkedNode(double distance, Node* neighbor, LinkedNode* next);
+	LinkedNode(double distance, Node* neighbor);
 };
 
 
