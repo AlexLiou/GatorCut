@@ -1,3 +1,11 @@
+//
+// Created by Asia Clifford on 4/15/18.
+//
+
+#ifndef DIJKSTRAALGORITHM_MAIN_H
+#define DIJKSTRAALGORITHM_MAIN_H
+
+#endif //DIJKSTRAALGORITHM_MAIN_H
 #include <string>
 #include <math.h>
 #include <cmath>
@@ -38,11 +46,10 @@ class LinkedNode{
 	LinkedNode* next;
 		public:
 	double getDistance();
-	double getDist(double lat1d, double lon1d, double lat2d, double lon2d);
 	Node* getNeighbor();
 	LinkedNode* getNext();
 	void setNext(LinkedNode* next);
-	LinkedNode(double distance, Node* neighbor);
+	LinkedNode(double distance, Node* neighbor, LinkedNode* next);
 };
 
 
