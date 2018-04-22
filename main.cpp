@@ -133,7 +133,7 @@ bool locationNameExists(string checkCase, vector <Node*> locations){
 struct AdjListNode
 {
     int dest;
-    int weight;
+    double weight;
     struct AdjListNode* next;
 };
 
@@ -152,7 +152,7 @@ struct Graph
 };
 
 // A utility function to create a new adjacency list node
-struct AdjListNode* newAdjListNode(int dest, int weight)
+struct AdjListNode* newAdjListNode(int dest, double weight)
 {
     struct AdjListNode* newNode =
             (struct AdjListNode*) malloc(sizeof(struct AdjListNode));
@@ -179,7 +179,7 @@ struct Graph* createGraph(int V)
 }
 
 // Adds an edge to an undirected graph
-void addEdge(struct Graph* graph, int src, int dest, int weight)
+void addEdge(struct Graph* graph, int src, int dest, double weight)
 {
     // Add an edge from src to dest.  A new node is added to the adjacency
     // list of src.  The node is added at the begining
