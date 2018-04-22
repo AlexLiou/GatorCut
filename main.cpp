@@ -723,10 +723,6 @@ else if(choice==2){
          }
             neighborChoice--;
         }
-         //pushes 0 for self to the vector for the new node
-            newLocationAdjacency.push_back(0);
-          //pushes the int vector for the new node onto adjMatrix
-            adjMatrix.push_back(newLocationAdjacency);
     
     
         int num = locations.size()-1;
