@@ -558,9 +558,10 @@ double dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap,
             }
             pCrawl = pCrawl->next;
         }
-        return dist[dest];
+       
     }
-
+         double x = dist[dest];
+        return x;
     }else{
     int V = graph->V;// Get the number of vertices in graph
     double dist[V];      // dist values used to pick minimum weight edge in cut
@@ -1020,6 +1021,7 @@ int main()
 
                         {
                     //trackerDist calculates the total distance from src to food to destination
+                            
                     trackerDist = dijkstra(graph, maphash.at(src), i, hashmap, transp, true) + dijkstra(graph, i, maphash.at(destination), hashmap, transp, true);
                     //if trackerDist is lower than the previous min and minDist hasnt been changed yet
                     if(trackerDist < minDist || minDist == 0){
