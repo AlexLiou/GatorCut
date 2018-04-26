@@ -17,7 +17,7 @@
 #include <stdlib.h> //needed for atof -> convert string to double
 #include "main.h"
 #include <iterator>
-
+#include <windows.h>
 
 using namespace std;
 
@@ -452,9 +452,8 @@ void printPath(int parent[], int src, int destination, map<int, string> hashmap)
 void printArr(double dist[], int src, int parent[], int destination, map<int, string> hashmap, string transp)
 {
     
-    printf("Source:\t\tDestination:\t\tDistance from Source:\n");
 
-    cout<<hashmap.at(src)<<"\t\t"<<hashmap.at(destination)<<"\t\t"<<dist[destination]<< " km";
+    cout<<"Source:  "<<hashmap.at(src)<< endl<<"Destination:  "<<hashmap.at(destination)<< endl << "Distance from source:  "<<dist[destination]<< " km";
 
         cout << fixed << showpoint;
         cout << setprecision(3);
@@ -627,6 +626,198 @@ double dijkstra(struct Graph* graph, int src,int dest, map<int, string> hashmap,
 
 int main()
 {
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+string ufMaps1="               _    _ ______   __  __          _____   _____ "; 
+string ufMaps2="              | |  | |  ____| |  \\/  |   /\\   |  __ \\ / ____|"; 
+string ufMaps3="              | |  | | |__    | \\  / |  /  \\  | |__) | (___  "; 
+string ufMaps4="              | |  | |  __|   | |\\/| | / /\\ \\ |  ___/ \\___ \\ "; 
+string ufMaps5="              | |__| | |      | |  | |/ ____ \\| |     ____) |"; 
+string ufMaps6="               \\____/|_|      |_|  |_/_/    \\_\\_|    |_____/ ";
+
+               
+
+string gator1 ="                    _.---._     .---.";
+string gator2 ="           __...---' .---. `---'-.   `.";
+string gator3 =" ~ -~ -.-''__.--' _.'( | )`.  `.  `._ :";
+string gator4 ="-.~~ .'__-'_ .--'' ._`---'_.-.  `.   `-`.";
+string gator5 ="   ~- ~ ~ -_ -~ ~ -.._ _ _ _ ..-_ `.  `-._``--.._";
+string gator6 ="    ~~-~ ~-_ _~ ~-~ ~ -~ _~~_-~ -._  `-.  -. `-._``--.._.--''. ~ -~_";
+string gator7 ="        ~~ -~_-~ _~- _~~ _~-_~ ~-_~~ ~-.___    -._  `-.__   `. `. ~ -_~";
+string gator8 ="            ~~ _~- ~~- -_~  ~- ~ - _~~- _~~ ~---...__ _    ._ .` `. ~-_~";
+string gator9 ="               ~ ~- _~~- _-_~ ~-_ ~-~ ~_-~ _~- ~_~-_~  ~--.....--~ -~_ ~";
+string gator10="                    ~ ~ - ~  ~ ~~ - ~~-  ~~- ~-  ~ -~ ~ ~ -~~-  ~- ~-~";
+
+                              
+int x=0;
+while ( ufMaps1[x] != '\0')
+{
+    cout << ufMaps1[x];
+    if(ufMaps1[x] != ' ')
+        Sleep(7);
+     fflush(stdout);
+    x++;
+};          
+cout<< endl;
+x= 0;
+while ( ufMaps2[x] != '\0')
+{
+    cout << ufMaps2[x];
+    if(ufMaps2[x] != ' ')
+        Sleep(7);
+    fflush(stdout);
+    x++;
+}; 
+cout<< endl;
+x= 0;
+while ( ufMaps3[x] != '\0')
+{
+    cout << ufMaps3[x];
+    if(ufMaps3[x] != ' ')
+    Sleep(7);
+    fflush(stdout);
+    x++;
+};
+cout<< endl;
+x= 0;
+while ( ufMaps4[x] != '\0')
+{
+    cout << ufMaps4[x];
+    if(ufMaps4[x] != ' ')
+    Sleep(7);
+    fflush(stdout);
+    x++;
+};
+cout<< endl;
+x= 0;
+while ( ufMaps5[x] != '\0')
+{
+    cout << ufMaps5[x];
+    if(ufMaps5[x] != ' ')
+    Sleep(7);
+    fflush(stdout);
+    x++;
+};
+cout<< endl;
+x= 0;
+while ( ufMaps6[x] != '\0')
+{
+    cout << ufMaps6[x];
+    if(ufMaps6[x] != ' ')
+    Sleep(7);
+    fflush(stdout);
+    x++;
+};                                                 
+              
+cout << "\n\n\n";  
+cout <<"\n\n\n";         
+              
+ x= 0;
+while ( gator1[x] != '\0')
+{
+    cout << gator1[x];
+    if(gator1[x] != ' ')
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator2[x] != '\0')
+{
+    cout << gator2[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator3[x] != '\0')
+{
+    cout << gator3[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator4[x] != '\0')
+{
+    cout << gator4[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator5[x] != '\0')
+{
+    cout << gator5[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator6[x] != '\0')
+{
+    cout << gator6[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator7[x] != '\0')
+{
+    cout << gator7[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator8[x] != '\0')
+{
+    cout << gator8[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+ x= 0;
+while ( gator9[x] != '\0')
+{
+    cout << gator9[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+x= 0;
+while ( gator10[x] != '\0')
+{
+    cout << gator10[x];
+    Sleep(4);
+    fflush(stdout);
+    x++;
+};
+cout << endl;
+
+cout << "\n\n\n";  
+                      
+                               
     //Vector of node locations: Holds data to be printed in methods to check database.
     vector <Node*> locations;
   
@@ -869,12 +1060,17 @@ int main()
     {
         // Prints menu.
         cout<<endl;
-            cout<<"\n--------------------Choices--------------------\n";
-            cout<<"                 1. Directions\n";
-            cout<<"                2. Add Location\n";
-            cout<<"               3. Print Locations\n";
-            cout<<"                4. View Database \n";
-            cout<<"                    5. Exit\n\n";
+            cout<<"---------------------    __                           ---------------------" <<endl;
+            cout<<"---------------------  /    /         /               ---------------------"  << endl;
+            cout<<"---------------------  (    (___  ___    ___  ___ ___ ---------------------" <<endl;
+            cout<<"---------------------  |   )|   )|   )| |    |___)___ ---------------------" <<endl;
+            cout<<"---------------------  |__/ |  / |__/ | |__  |__  __/ ---------------------" <<endl;
+            cout<<"\n\n";
+            cout<<"                             1. Directions\n";
+            cout<<"                            2. Add Location\n";
+            cout<<"                           3. Print Locations\n";
+            cout<<"                             4. View Database \n";
+            cout<<"                                5. Exit\n\n";
             cin >> choice;
       
         // Checks if user input is incorrect for its purpose.
@@ -990,16 +1186,17 @@ int main()
             if(foodYN == "Y" || foodYN =="y"){
               
                 if (locations[maphash.at(src)]->getName().compare("Reitz-Union") == 0 ||
-                    locations[maphash.at(src)]->getName().compare("Little Hall") == 0 ||
-                    locations[maphash.at(src)]->getName().compare("Student Rec") == 0 ||
-                    locations[maphash.at(src)]->getName().compare("Broward Dining") == 0  ||
-                    locations[maphash.at(src)]->getName().compare("Hub") == 0         ||
-                    locations[maphash.at(src)]->getName().compare("Hub") == 0         ||
-                    locations[maphash.at(src)]->getName().compare("Little-Hall") == 0){
+                    locations[maphash.at(src)]->getName().compare("Little-Hall") == 0 ||
+                    locations[maphash.at(src)]->getName().compare("Racquet-Dining") == 0 ||
+                    locations[maphash.at(src)]->getName().compare("Broward-Dining") == 0  ||
+                    locations[maphash.at(src)]->getName().compare("The-HUB") == 0         ||
+                    locations[maphash.at(src)]->getName().compare("Broward-Dining") == 0         ||
+                    locations[maphash.at(src)]->getName().compare("Little Hall") == 0){
 
                     cout << "\nThere is food at your source location: " << locations[maphash.at(src)]->getName() << ".\n";
                         dijkstra(graph, maphash.at(src), maphash.at(destination), hashmap, transp, false);
-                }else{
+                }
+                else{
 
                 //initlizes variables for tracking and recording the fasted distance food place
 
@@ -1011,26 +1208,24 @@ int main()
               //iterates through locations to check what locations have food
                 for(int i = 0; i<locations.size(); i++){
                     //if statement -> if the name matches the location has food
-                        if (locations[i]->getName().compare("Reitz-Union") == 0 ||
-                            locations[i]->getName().compare("Little-Hall") == 0 ||
-                            locations[i]->getName().compare("Student Rec") == 0 ||
-                            locations[i]->getName().compare("Broward Dining") == 0  ||
-                            locations[i]->getName().compare("Hub") == 0         ||
-                            locations[i]->getName().compare("Hub") == 0         ||
-                            locations[i]->getName().compare("Little-Hall") == 0)
-
-                        {
+                    
+                    if (locations[i]->getName().compare("Reitz-Union") == 0 ||
+                    locations[i]->getName().compare("Little-Hall") == 0 ||
+                    locations[i]->getName().compare("Racquet-Dining") == 0 ||
+                    locations[i]->getName().compare("Broward-Dining") == 0  ||
+                    locations[i]->getName().compare("The-HUB") == 0         ||
+                    locations[i]->getName().compare("Broward-Dining") == 0         ||
+                    locations[i]->getName().compare("Little Hall") == 0){
                     //trackerDist calculates the total distance from src to food to destination
                             
                     trackerDist = dijkstra(graph, maphash.at(src), i, hashmap, transp, true) + dijkstra(graph, i, maphash.at(destination), hashmap, transp, true);
                     //if trackerDist is lower than the previous min and minDist hasnt been changed yet
                     if(trackerDist < minDist || minDist == 0){
+                       
                         minDist = trackerDist;
                         bestFood = i;
-
-
                     }
-
+                
                 }
 
                 }
@@ -1232,7 +1427,7 @@ int main()
             {
                     for (int i = 0; i < locations.size(); ++i)
                     {
-                        cout<< "\nName: "<< locations[i]->getName() << " Longtitude: " <<locations[i]->getLon() << " Latitude: "<< locations[i]->getLat();
+                        cout<< "\nName: "<< locations[i]->getName() << " \t\tLongtitude: " <<locations[i]->getLon() << " Latitude: "<< locations[i]->getLat();
                     }
             }
       
